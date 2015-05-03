@@ -1,10 +1,4 @@
-perceptron.train <- function(feature, classes) {
-  weights <- 
-}
-
-eliminate.na <- function(features) {
-  mean <- colMeans(features)
-  for(col.id in 1: length(features)) {
-    apply
-  }
+perceptron.train <- function(features, classes) {
+  features.clean <- aggregate(.~V2, features, FUN=mean)
+  features.clean
 }
