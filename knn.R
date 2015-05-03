@@ -1,5 +1,5 @@
 require(class)
-install.packages("zoo", type="source", repos="http://cran.stat.ucla.edu/")
+require(zoo)
 data9 <- read.table("http://wwwf.imperial.ac.uk/~eakc07/S7/data9.dat")
 
 ## Set up constants
