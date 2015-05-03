@@ -1,5 +1,5 @@
-train.data <- list(class=train[,1], features=as.matrix(train[,2:data.length]))
-test.data <- list(class=test[,1], features=as.matrix(test[,2:data.length]))
+train.data <- list(class=train[,1], features=as.matrix(normalize(train[,2:data.length])))
+test.data <- list(class=test[,1], features=as.matrix(normalize(test[,2:data.length])))
 
 train.data$features[is.na(train.data$features)] <- 0
 test.data$features[is.na(test.data$features)] <- 0
@@ -20,15 +20,17 @@ perceptron.train <- function(data, iter=5) {
   classified.all <- apply(pattern.aug, 1, function(x) x %*% weights <= 0)
   missclassified <- pattern.aug[which(classified.all),]
   for(i in 1:iter) {
-    newWeights <- weights + colSums(missclassified)
+    newWeights <- weights + 0.1*colSums(missclassified)
     weights <- newWeights
+    print(weights)
   }
   weights
 }
 
 perceptron.classify <- function(train, test) {
-  weights <-perceptron.train(train,100)
+  weights <-perceptron.train(train,1000)
   classes <- apply(test$features, 1, function(x) perceptron.single(c(1,x), weights))
+  print(classes)
   count <- sum(as.numeric(classes==test$class))
   count
 }
