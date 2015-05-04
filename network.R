@@ -12,7 +12,7 @@ network <- function(data, H=3) {
   pattern.aug <- cbind(rep(1, n), data$features)
   output1 <- output.level1(weights$level1, pattern.aug)
   output2 <- output.level2(weights$level2, cbind(rep(1,n),output1))
-  output
+  output2
 }
 
 ##Computes output of first layer for each example
@@ -27,18 +27,6 @@ output1.example <- function(weights, x) {
 
 output.level2 <- function(weights, examples) {
   apply(examples, 1, function(x) weights %*% x)
-}
-
-
-
-network.forward <- function(alpha, omega, examples) {
-  apply(examples, 1, function(x) network.forward.single(alpha, omega, x))
-}
-
-network.forward.single <- function(alpha, omega, x) {
-  hidden <- apply(alpha, 1, function(weight) weight%*% x)
-  hidden <- c(1,hidden)
-  omega%*%hidden
 }
 
 sygmoid <-function(x) {
