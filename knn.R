@@ -89,9 +89,11 @@ knn.classify <- function(train, train.target, test, test.target, k = K) {
 }
 
 knn.crossvalidation <-function(train, train.target) {
-  for(k in seq(1, 19, 2)) {
+  n <- length(train.target)
+  ks <- seq(21, 31, 2)
+  error.rates <- lapply(ks, function(k) {
     count <- 0
-    for(i in 1: length(train.target)) {
+    for(i in 1: n) {
       test.new <- train[i,]
       train.new <-train[-i,]
       test.target.new <- train.target[i]
@@ -99,5 +101,12 @@ knn.crossvalidation <-function(train, train.target) {
       count <- count + knn.classify(train.new, train.target.new, test.new, test.target.new, k=k)
     }
     print(count)
-  }
+    1 - count/n
+  } )
+}
+
+knn.plotk <- function(train, train.target) {
+  k <- seq(1, 19, 2)
+  error <- knn.crossvalidation(train, train.target)
+  plot(k, error)
 }
