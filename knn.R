@@ -87,3 +87,17 @@ knn.classify <- function(train, train.target, test, test.target, k = K) {
   count <- sum(as.numeric(classes==test.target))
   count
 }
+
+knn.crossvalidation <-function(train, train.target) {
+  for(k in seq(1, 19, 2)) {
+    count <- 0
+    for(i in 1: length(train.target)) {
+      test.new <- train[i,]
+      train.new <-train[-i,]
+      test.target.new <- train.target[i]
+      train.target.new <- train.target[-i]
+      count <- count + knn.classify(train.new, train.target.new, test.new, test.target.new, k=k)
+    }
+    print(count)
+  }
+}
